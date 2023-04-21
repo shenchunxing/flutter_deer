@@ -14,6 +14,7 @@ class MyScrollView extends StatelessWidget {
     super.key,
     required this.children,
     this.padding,
+    /*BouncingScrollPhysics：只有在滚动控件的高度超过屏幕高度时,才会有效果*/
     this.physics = const BouncingScrollPhysics(),
     this.crossAxisAlignment = CrossAxisAlignment.start,
     this.bottomButton,
@@ -27,6 +28,7 @@ class MyScrollView extends StatelessWidget {
   final ScrollPhysics physics;
   final CrossAxisAlignment crossAxisAlignment;
   final Widget? bottomButton;
+  /*键盘配置*/
   final KeyboardActionsConfig? keyboardConfig;
   /// 键盘外部按下将其关闭
   final bool tapOutsideToDismiss;
@@ -41,6 +43,7 @@ class MyScrollView extends StatelessWidget {
       children: children,
     );
 
+    /*如果是ios才需要添加这个动作条*/
     if (defaultTargetPlatform == TargetPlatform.iOS && keyboardConfig != null) {
       /// iOS 键盘处理
 
@@ -50,7 +53,7 @@ class MyScrollView extends StatelessWidget {
           child: contents
         );
       }
-
+      /*键盘上的动作条*/
       contents = KeyboardActions(
         isDialog: bottomButton != null,
         overscroll: overScroll,

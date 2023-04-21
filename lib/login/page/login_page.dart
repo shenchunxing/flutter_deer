@@ -24,6 +24,7 @@ class LoginPage extends StatefulWidget {
   _LoginPageState createState() => _LoginPageState();
 }
 
+/*ChangeNotifierMixin ： 封装的监听文本输入的回调函数，会自动加上addListener*/
 class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPage> {
   //定义一个controller
   final TextEditingController _nameController = TextEditingController();
@@ -34,10 +35,12 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
 
   @override
   Map<ChangeNotifier, List<VoidCallback>?>? changeNotifier() {
+    /*可以监听多个函数，这里只有一个*/
     final List<VoidCallback> callbacks = <VoidCallback>[_verify];
     return <ChangeNotifier, List<VoidCallback>?>{
       _nameController: callbacks,
       _passwordController: callbacks,
+      //TODO:这里_nodeText1和_nodeText2不监听，是不是可以不写？
       _nodeText1: null,
       _nodeText2: null,
     };
@@ -80,6 +83,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      /*封装的导航栏*/
       appBar: MyAppBar(
         isBack: false,
         actionName: DeerLocalizations.of(context)!.verificationCodeLogin,
@@ -87,6 +91,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
           NavigatorUtils.push(context, LoginRouter.smsLoginPage);
         },
       ),
+      /*封装的滚动视图，这里把_nodeText1, _nodeText2同时加入监听，也可以单独只加一个*/
       body: MyScrollView(
         keyboardConfig: Utils.getKeyboardActionsConfig(context, <FocusNode>[_nodeText1, _nodeText2]),
         padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 20.0),
@@ -101,6 +106,7 @@ class _LoginPageState extends State<LoginPage> with ChangeNotifierMixin<LoginPag
       style: TextStyles.textBold26,
     ),
     Gaps.vGap16,
+    /*文本输入框，把各种输入框都封装进去了*/
     MyTextField(
       key: const Key('phone'),
       focusNode: _nodeText1,

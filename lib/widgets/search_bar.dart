@@ -24,6 +24,7 @@ class SearchBar extends StatefulWidget implements PreferredSizeWidget {
   @override
   _SearchBarState createState() => _SearchBarState();
 
+  /*preferredSize：首选大小*/
   @override
   Size get preferredSize => const Size.fromHeight(48.0);
 }
@@ -62,6 +63,7 @@ class _SearchBarState extends State<SearchBar> {
         child: InkWell(
           onTap: () {
             _focus.unfocus();
+            /*maybePop：允许pop不成功*/
             Navigator.maybePop(context);
           },
           borderRadius: BorderRadius.circular(24.0),
@@ -116,6 +118,7 @@ class _SearchBarState extends State<SearchBar> {
 //          autofocus: true,
           controller: _controller,
           focusNode: _focus,
+          /*键盘右下角按键样式*/
           textInputAction: TextInputAction.search,
           onSubmitted: (String val) {
             _focus.unfocus();
@@ -162,9 +165,11 @@ class _SearchBarState extends State<SearchBar> {
         widget.onPressed?.call(_controller.text);
       },
     );
-    
+
+    /*AnnotatedRegion：修改状态栏字体颜色*/
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark,
+      /*Material：本身没有实际UI效果，内部封装了很多U相关的属性，用于child*/
       child: Material(
         color: context.backgroundColor,
         child: SafeArea(

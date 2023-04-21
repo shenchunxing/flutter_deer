@@ -59,7 +59,7 @@ Future<void> main() async {
 
   /// 1.22 预览功能: 在输入频率与显示刷新率不匹配情况下提供平滑的滚动效果
   // GestureBinding.instance?.resamplingEnabled = true;
-  /// 异常处理
+  /// 异常处理,出现异常会全局捕获
   handleError(() => runApp(MyApp()));
 
   /// 隐藏状态栏。为启动页、引导页设置。完成后修改回显示状态栏。
@@ -70,9 +70,13 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key, this.home, this.theme}) {
+    /*打印*/
     Log.init();
+    /*Dio初始化*/
     initDio();
+    /*路由*/
     Routes.initRoutes();
+    /*ios中用力按APP图标出现的快捷操作，基本用不到*/
     initQuickActions();
   }
 
@@ -86,16 +90,17 @@ class MyApp extends StatelessWidget {
     /// 统一添加身份验证请求头
     interceptors.add(AuthInterceptor());
 
-    /// 刷新Token
+    /// 刷新Token，在token过期的时候，自动刷新token
     interceptors.add(TokenInterceptor());
 
-    /// 打印Log(生产模式去除)
+    /// 打印Log(生产模式去除)，打印网络请求的过程日志
     if (!Constant.inProduction) {
       interceptors.add(LoggingInterceptor());
     }
 
-    /// 适配数据(根据自己的数据结构，可自行选择添加)
+    /// 对请求的结果做一些适配处理后，再返回（根据自己项目的要求来调整）
     interceptors.add(AdapterInterceptor());
+    /*初始化Dio*/
     configDio(
       baseUrl: 'https://api.github.com/',
       interceptors: interceptors,
@@ -129,6 +134,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*主题和语言的变化*/
     final Widget app = MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
@@ -163,6 +169,7 @@ class MyApp extends StatelessWidget {
       theme: theme ?? provider.getTheme(),
       darkTheme: provider.getTheme(isDarkMode: true),
       themeMode: provider.getThemeMode(),
+      /*手动设置起始页，如果没设置就是引导页*/
       home: home ?? const SplashPage(),
       onGenerateRoute: Routes.router.generator,
       localizationsDelegates: DeerLocalizations.localizationsDelegates,

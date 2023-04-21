@@ -25,6 +25,7 @@ class OrderPage extends StatefulWidget {
   _OrderPageState createState() => _OrderPageState();
 }
 
+/*AutomaticKeepAliveClientMixin:一直保持页面，不会因为切换页面而刷新重载，提高性能*/
 class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixin<OrderPage>, SingleTickerProviderStateMixin {
 
   @override
@@ -71,6 +72,7 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
   Widget build(BuildContext context) {
     super.build(context);
     isDark = context.isDark;
+    /*ChangeNotifierProvider：监听变化*/
     return ChangeNotifierProvider<OrderPageProvider>(
       create: (_) => provider,
       child: Scaffold(
@@ -88,13 +90,18 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                 ),
               ),
             ),
+            /*NestedScrollView ：将外部滚动(Header部分)和内部滚动(Body部分)联动起来。里面滚动不了，滚动外面。外面滚动没了，滚动里面*/
             NestedScrollView(
               key: const Key('order_list'),
+              /*ClampingScrollPhysics：防止滚动超出边界，夹住*/
               physics: const ClampingScrollPhysics(),
+              /*配合NestedScrollView的滚动套件*/
               headerSliverBuilder: (context, innerBoxIsScrolled) => _sliverBuilder(context),
+              /*通知监听*/
               body: NotificationListener<ScrollNotification>(
                 onNotification: (ScrollNotification notification) {
                   /// PageView的onPageChanged是监听ScrollUpdateNotification，会造成滑动中卡顿。这里修改为监听滚动结束再更新、
+                  /// 监听指定的元素，depth表示深度，默认是0也就是child: PageView.builder
                   if (notification.depth == 0 && notification is ScrollEndNotification) {
                     final PageMetrics metrics = notification.metrics as PageMetrics;
                     final int currentPage = (metrics.page ?? 0).round();
@@ -121,8 +128,10 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
 
   List<Widget> _sliverBuilder(BuildContext context) {
     return <Widget>[
+      /*SliverOverlapAbsorber ： 随着滚动带有缩放效果的控件*/
       SliverOverlapAbsorber(
         handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+        /*Sliver版本的appbar*/
         sliver: SliverAppBar(
           systemOverlayStyle: SystemUiOverlayStyle.light,
           actions: <Widget>[
@@ -143,6 +152,7 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
           centerTitle: true,
           expandedHeight: 100.0, // 不随着滑动隐藏标题
           pinned: true, // 固定在顶部
+          /*flexibleSpace ； 动画部分的属性设置*/
           flexibleSpace: MyFlexibleSpaceBar(
             background: isDark ? Container(height: 113.0, color: Colours.dark_bg_color,) : LoadAssetImage('order/order_bg',
               width: context.width,
@@ -156,9 +166,12 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
           ),
         ),
       ),
+
+      /*滚动到一定位置，会悬浮*/
       SliverPersistentHeader(
-        pinned: true,
+        pinned: true,// 固定在顶部
         delegate: SliverAppBarDelegate(
+          /*圆弧背景图*/
           DecoratedBox(
             decoration: BoxDecoration(
               color: isDark ? Colours.dark_bg_color : null,
@@ -167,12 +180,14 @@ class _OrderPageState extends State<OrderPage> with AutomaticKeepAliveClientMixi
                 fit: BoxFit.fill,
               ),
             ),
+            /*中间的带5个按钮的框*/
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: MyCard(
                 child: Container(
                   height: 80.0,
                   padding: const EdgeInsets.only(top: 8.0),
+                  /*TabBar：切换*/
                   child: TabBar(
                     labelPadding: EdgeInsets.zero,
                     controller: _tabController,

@@ -36,6 +36,7 @@ class _OrderTrackPageState extends State<OrderTrackPage> {
               ],
             )
           ),
+          /*Stepper : 是 flutter 提供的步骤选择器*/
           Stepper(
             physics: const BouncingScrollPhysics(),
             currentStep: 4 - 1,
@@ -56,6 +57,7 @@ class _OrderTrackPageState extends State<OrderTrackPage> {
   
   Step _buildStep(int index) {
     final Color primaryColor = Theme.of(context).primaryColor;
+    /*Step：每一个步骤*/
     return Step(
       title: Padding(
         padding: const EdgeInsets.only(top: 15.0),
@@ -69,9 +71,10 @@ class _OrderTrackPageState extends State<OrderTrackPage> {
         color: primaryColor,
       ) : Theme.of(context).textTheme.titleSmall),
       content: const Text(''),
+      /*激活位置*/
       isActive: index == 0,
       // TODO(weilu): 这里的状态图标无法修改，暂时使用原生的。应该可以复制Step代码修改一下。
-      state: index == 0 ? StepState.complete : StepState.indexed, 
+      state: index == 0 ? StepState.complete : StepState.indexed,
     );
   }
 }

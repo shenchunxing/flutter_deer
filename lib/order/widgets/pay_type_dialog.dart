@@ -25,6 +25,7 @@ class _PayTypeDialog extends State<PayTypeDialog> {
   final _list = ['未收款', '支付宝', '微信', '现金'];
 
   Widget _buildItem(int index) {
+    /*TODO:这里Material貌似没什么用*/
     return Material(
       type: MaterialType.transparency,
       child: InkWell(
@@ -62,6 +63,7 @@ class _PayTypeDialog extends State<PayTypeDialog> {
   
   @override
   Widget build(BuildContext context) {
+    /*自定义dialog的模板*/
     return BaseDialog(
       title: '收款方式',
       child: Column(

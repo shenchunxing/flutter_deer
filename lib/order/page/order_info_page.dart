@@ -32,6 +32,7 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
     final Widget bottomMenu = Container(
       height: 60.0,
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
+      /*Theme：给child设置一些公共属性，省得去封装了*/
       child: Theme(
         data: Theme.of(context).copyWith(
           buttonTheme: const ButtonThemeData(
@@ -39,6 +40,7 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
           ),
         ),
         child: Row(
+          /*MainAxisAlignment.spaceBetween ： 两边对齐*/
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Expanded(
@@ -76,6 +78,7 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
       Gaps.vGap16,
       Row(
         children: <Widget>[
+          /*ClipOval：圆角裁剪*/
           const ClipOval(
             child: LoadAssetImage('order/icon_avatar', width: 44.0, height: 44.0),
           ),
@@ -113,7 +116,7 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
         children: const <Widget>[
           LoadAssetImage('order/icon_address', width: 16.0, height: 20.0),
           Gaps.hGap4,
-          Expanded(child: Text('西安市雁塔区 鱼化寨街道唐兴路唐兴数码3楼318', maxLines: 2)),
+          Expanded(child: Text('西安市雁塔区 鱼化寨街道唐兴路唐兴数码3楼318789897987978987879789789879879897987978987879879987987987879879897879879897987789879879879879879', maxLines: 2)),
         ],
       ),
       Gaps.vGap32,
@@ -210,6 +213,7 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
                 children: <Widget>[
                   _buildGoodsTag(Theme.of(context).colorScheme.error, '立减2.50元'),
                   Gaps.hGap4,
+                  /*Offstage：可隐藏*/
                   Offstage(
                     offstage: index % 2 != 0,
                     child: _buildGoodsTag(Theme.of(context).primaryColor, '抵扣2.50元'),
@@ -222,6 +226,7 @@ class _OrderInfoPageState extends State<OrderInfoPage> {
         Gaps.hGap8,
         const Text('x1', style: TextStyles.textSize12),
         Gaps.hGap32,
+        /*common_utils包含很多常用的工具类：格式转换*/
         Text(Utils.formatPrice('25'), style: TextStyles.textBold14),
       ],
     );

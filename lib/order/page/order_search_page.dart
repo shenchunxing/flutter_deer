@@ -34,7 +34,7 @@ class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<Or
   @override
   void initState() {
     /// 默认为加载中状态，本页面场景默认为空
-    provider.stateType = StateType.empty;
+    provider.stateType = StateType.order;
     super.initState();
   }
   
@@ -43,6 +43,7 @@ class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<Or
     return ChangeNotifierProvider<BaseListProvider<SearchItems>>(
       create: (_) => provider,
       child: Scaffold(
+        /*搜索栏*/
         appBar: SearchBar(
           hintText: '请输入手机号或姓名查询',
           onPressed: (text) {
@@ -58,9 +59,11 @@ class _OrderSearchPageState extends State<OrderSearchPage> with BasePageMixin<Or
         ),
         body: Consumer<BaseListProvider<SearchItems>>(
           builder: (_, provider, __) {
+            /*DeerListView：封装了上拉和下拉*/
             return DeerListView(
               key: const Key('order_search_list'),
               itemCount: provider.list.length,
+              /*当前状态*/
               stateType: provider.stateType,
               onRefresh: _onRefresh,
               loadMore: _loadMore,

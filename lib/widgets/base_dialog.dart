@@ -36,6 +36,7 @@ class BaseDialog extends StatelessWidget {
 
     final Widget bottomButton = Row(
       children: <Widget>[
+        /*_DialogButton：简单按钮封装*/
         _DialogButton(
           text: '取消',
           textColor: Colours.text_gray,
@@ -44,6 +45,7 @@ class BaseDialog extends StatelessWidget {
         const SizedBox(
           height: 48.0,
           width: 0.6,
+          /*VerticalDivider:竖直分割线*/
           child: VerticalDivider(),
         ),
         _DialogButton(
@@ -69,6 +71,7 @@ class BaseDialog extends StatelessWidget {
       ),
     );
 
+    /*TODO:这里感觉可以去掉MediaQuery.removeViewInsets，没什么用？ MediaQuery.removeViewInsets:移除视图内边距*/
     final Widget body = MediaQuery.removeViewInsets(
       removeLeft: true,
       removeTop: true,
@@ -93,6 +96,8 @@ class BaseDialog extends StatelessWidget {
         child: body,
       );
     } else {
+      /*AnimatedPadding：带动画的Padding*/
+      /*TODO:修改动画类型和时间为什么不起作用？*/
       return AnimatedPadding(
         padding: MediaQuery.of(context).viewInsets,
         duration: const Duration(milliseconds: 120),

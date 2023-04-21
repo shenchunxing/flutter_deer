@@ -69,6 +69,7 @@ class _SplashPageState extends State<SplashPage> {
     });
   }
 
+  /*延迟加载是为了让预加载图片完成，避免闪动*/
   void _initSplash() {
     _subscription = Stream.value(1).delay(const Duration(milliseconds: 1500)).listen((_) {
       if (SpUtil.getBool(Constant.keyGuide, defValue: true)! || Constant.isDriverTest) {
@@ -89,6 +90,7 @@ class _SplashPageState extends State<SplashPage> {
     return Material(
       color: context.backgroundColor,
       child: _status == 0 ?
+      /*启动图*/
       const FractionallyAlignedSizedBox(
         heightFactor: 0.3,
         widthFactor: 0.33,
@@ -96,6 +98,7 @@ class _SplashPageState extends State<SplashPage> {
         bottomFactor: 0,
         child: LoadAssetImage('logo')
       ) :
+      /*系统轮播组件*/
       Swiper(
         key: const Key('swiper'),
         itemCount: _guideList.length,

@@ -48,6 +48,7 @@ class _OrderListPageState extends State<OrderListPage> with AutomaticKeepAliveCl
     super.build(context);
     return NotificationListener(
       onNotification: (ScrollNotification note) {
+        /*滚动到底部，自动加载*/
         if (note.metrics.pixels == note.metrics.maxScrollExtent) {
           _loadMore();
         }
@@ -62,26 +63,33 @@ class _OrderListPageState extends State<OrderListPage> with AutomaticKeepAliveCl
               /// 这里指定controller可以与外层NestedScrollView的滚动分离，避免一处滑动，5个Tab中的列表同步滑动。
               /// 这种方法的缺点是会重新layout列表
               controller: _index != provider.index ? _controller : null,
+              /*PageStorageKey ： 用于保存页面状态，比如当你有一个滑动列表，你通过某一个 Item 跳转到了一个新的页面，当你返回之前的列表页面时，你发现滑动的距离回到了顶部。这时候，给 Sliver 一个 PageStorageKey！它将能够保持 Sliver 的滚动状态*/
               key: PageStorageKey<String>('$_index'),
               slivers: <Widget>[
+                //SliverOverlapInjector: SliverAppBar的expandedHeight高度,避免重叠
                 SliverOverlapInjector(
-                  ///SliverAppBar的expandedHeight高度,避免重叠
                   handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 ),
                 child!,
               ],
             );
           },
+          /*带Sliver的Padding*/
           child: SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            /*StateLayout：菊花指示器或者空白页*/
+            /*SliverFillRemaining：会填充一整个屏幕，配合CustomScrollView，可以在屏幕太小的地方全屏滚动*/
             sliver: _list.isEmpty ? SliverFillRemaining(child: StateLayout(type: _stateType)) :
+            /*SliverList：列表*/
             SliverList(
               delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
-                return index < _list.length ? 
-                (index % 5 == 0 ? 
+                return index < _list.length ?
+                (index % 5 == 0 ?
+                    /*列表头部的日期和订单数量*/
                     const OrderTagItem(date: '2021年2月5日', orderTotal: 4) :
                     OrderItem(key: Key('order_item_$index'), index: index, tabIndex: _index,)
-                ) : 
+                ) :
+                    /*加载更多*/
                 MoreWidget(_list.length, _hasMore(), 10);
               },
               childCount: _list.length + 1),

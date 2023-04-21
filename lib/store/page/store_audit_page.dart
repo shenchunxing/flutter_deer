@@ -35,7 +35,7 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
   final ImagePicker picker = ImagePicker();
   String _address = '陕西省 西安市 雁塔区 高新六路201号';
 
-
+/*根据不同文本输入框，自定义键盘动作条显示*/
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
       keyboardActionsPlatform: KeyboardActionsPlatform.IOS,
@@ -81,6 +81,7 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
           child: MyButton(
             onPressed: () {
+              /*文件路径*/
               debugPrint('文件路径：${_imageGlobalKey.currentState?.pickedFile?.path}');
               NavigatorUtils.push(context, StoreRouter.auditResultPage);
             },
@@ -103,6 +104,7 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
       ),
       Gaps.vGap16,
       Center(
+        /*选中*/
         child: SelectedImage(
           key: _imageGlobalKey,
         ),
@@ -115,6 +117,7 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
         ),
       ),
       Gaps.vGap16,
+      /*文本输入*/
       TextFieldItem(
         focusNode: _nodeText1,
         title: '店铺名称',
@@ -160,6 +163,7 @@ class _StoreAuditPageState extends State<StoreAuditPage> {
   String _sortName = '';
   final List<String> _list = ['水果生鲜', '家用电器', '休闲食品', '茶酒饮料', '美妆个护', '粮油调味', '家庭清洁', '厨具用品', '儿童玩具', '床上用品'];
 
+  /*展示底部筛选*/
   void _showBottomSheet() {
     showModalBottomSheet<void>(
       context: context,

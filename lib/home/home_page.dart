@@ -17,7 +17,7 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-
+/*RestorationMixin：状态保存机制，为了不再切换tab的时候频繁刷新*/
 class _HomeState extends State<Home> with RestorationMixin{
 
   static const double _imageSize = 25.0;
@@ -122,6 +122,7 @@ class _HomeState extends State<Home> with RestorationMixin{
     final bool isDark = context.isDark;
     return ChangeNotifierProvider<HomeProvider>(
       create: (_) => provider,
+      /*封装的双击退出APP*/
       child: DoubleTapBackExitApp(
         child: Scaffold(
           bottomNavigationBar: Consumer<HomeProvider>(
@@ -142,6 +143,7 @@ class _HomeState extends State<Home> with RestorationMixin{
             },
           ),
           // 使用PageView的原因参看 https://zhuanlan.zhihu.com/p/58582876
+            //PageView或者TabBarView可以实现懒加载，性能更好
           body: PageView(
             physics: const NeverScrollableScrollPhysics(), // 禁止滑动
             controller: _pageController,
@@ -156,6 +158,7 @@ class _HomeState extends State<Home> with RestorationMixin{
   @override
   String? get restorationId => 'home';
 
+  /*这里将provider和BottomNavigationBarCurrentIndex绑定在了一起*/
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(provider, 'BottomNavigationBarCurrentIndex');

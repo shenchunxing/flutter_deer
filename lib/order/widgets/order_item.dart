@@ -33,6 +33,7 @@ class OrderItem extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: InkWell(
+            /*订单详情*/
             onTap: () => NavigatorUtils.push(context, OrderRouter.orderInfoPage),
             child: _buildContent(context),
           ),
@@ -118,6 +119,7 @@ class OrderItem extends StatelessWidget {
               text: '联系客户',
               textColor: isDark ? Colours.dark_text : Colours.text,
               bgColor: isDark ? Colours.dark_material_bg : Colours.bg_gray,
+              /*打电话弹窗*/
               onTap: () => _showCallPhoneDialog(context, '15000000000'),
             ),
             const Expanded(
@@ -130,6 +132,7 @@ class OrderItem extends StatelessWidget {
               bgColor: isDark ? Colours.dark_material_bg : Colours.bg_gray,
               onTap: () {
                 if (tabIndex >= 2) {
+                  /*订单追踪*/
                   NavigatorUtils.push(context, OrderRouter.orderTrackPage);
                 }
               },
@@ -142,6 +145,7 @@ class OrderItem extends StatelessWidget {
               bgColor: isDark ? Colours.dark_app_main : Colours.app_main,
               onTap: () {
                 if (tabIndex == 2) {
+                  /*收款方式封装*/
                   _showPayTypeDialog(context);
                 }
               },

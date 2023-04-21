@@ -25,6 +25,7 @@ class _DoubleTapBackExitAppState extends State<DoubleTapBackExitApp> {
 
   @override
   Widget build(BuildContext context) {
+    /*WillPopScope：监听退出*/
     return WillPopScope(
       onWillPop: _isExit,
       child: widget.child,
@@ -32,6 +33,7 @@ class _DoubleTapBackExitAppState extends State<DoubleTapBackExitApp> {
   }
 
   Future<bool> _isExit() async {
+    /*连续两次的点击时间间隔*/
     if (_lastTime == null || DateTime.now().difference(_lastTime!) > widget.duration) {
       _lastTime = DateTime.now();
       Toast.show('再次点击退出应用');

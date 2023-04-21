@@ -31,6 +31,7 @@ class SelectedImageState extends State<SelectedImage> {
 
   final ImagePicker _picker = ImagePicker();
   ImageProvider? _imageProvider;
+  /*文件路径*/
   XFile? pickedFile;
 
   Future<void> _getImage() async {
@@ -61,6 +62,7 @@ class SelectedImageState extends State<SelectedImage> {
 
   @override
   Widget build(BuildContext context) {
+    /*ColorFilter：图片滤镜效果*/
     final ColorFilter colorFilter = ColorFilter.mode(
         ThemeUtils.isDark(context) ? Colours.dark_unselected_item_color : Colours.text_gray,
         BlendMode.srcIn
@@ -80,10 +82,12 @@ class SelectedImageState extends State<SelectedImage> {
       ),
     );
 
+    /*Hero : 带动画的图片方案*/
     if (widget.heroTag != null && !Device.isWeb) {
       image = Hero(tag: widget.heroTag!, child: image);
     }
 
+    /*Semantics是语义widget，可以给特殊人权使用，比如色盲患者，让他们可以看到该widget的正确样式*/
     return Semantics(
       label: '选择图片',
       hint: '跳转相册选择图片',
