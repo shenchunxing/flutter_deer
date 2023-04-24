@@ -38,9 +38,15 @@ class _PieChartState extends State<PieChart> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
 
+    /*设置动画*/
+    /*动画控制器controller：设置动画时长*/
     controller = AnimationController(duration: const Duration(milliseconds: 800), vsync: this);
+    /*动画Animation:根据controller和动画类型设置*/
     final Animation<double> curve = CurvedAnimation(parent: controller, curve: Curves.decelerate);
+    /*Tween: 弥补 AnimationController 动画值只能为 double 类型的不足,，所以需要不同类型的变化值，那么就可以使用 Tween 。*/
+    /*合成最终需要执行的动画*/
     animation = Tween<double>(begin: 0, end: 1).animate(curve);
+    /*执行动画*/
     controller.forward(from: 0);
   }
 
@@ -76,10 +82,13 @@ class _PieChartState extends State<PieChart> with SingleTickerProviderStateMixin
           BoxShadow(color: shadowColor, offset: const Offset(0.0, 4.0), blurRadius: 8.0),
         ],
       ),
+      /*RepaintBoundary：重绘*/
       child: RepaintBoundary(
+        /*动画控件*/
         child: AnimatedBuilder(
           animation: animation,
           builder: (_, Widget? child) {
+            /*自绘圆环*/
             return CustomPaint(
               painter: PieChartPainter(
                 widget.data,
@@ -135,7 +144,7 @@ class PieChartPainter extends CustomPainter {
       data[i].color = PieChart.colorList[i];
       data[i].percentage = data[i].number / count;
       // 排序后的数据输出
-//      print(data[i].toString());
+     // print(data[i].toString());
     }
     if (pieData != null) {
       data.add(pieData);
@@ -166,15 +175,19 @@ class PieChartPainter extends CustomPainter {
       return;
     }
     prevAngle = -math.pi;
+    /*半径*/
     mRadius = math.min(size.width, size.height) / 2 - 4;
     // 圆心
     final Offset offset = Offset(size.width / 2, size.height / 2);
+    /*确定圆环位置*/
     mCircle = Rect.fromCircle(center: offset, radius: mRadius);
-    
+
+    /*绘制扇形*/
     for (int i = 0; i < data.length; i++) {
       _mPaint..color = data[i].color
         ..style = PaintingStyle.fill;
       canvas.drawArc(mCircle, prevAngle, totalAngle * data[i].percentage, true, _mPaint);
+      /*变换角度，绘制下一个商品*/
       prevAngle = prevAngle + totalAngle * data[i].percentage;
     }
     // 为了文字不被覆盖，在绘制完扇形后绘制文字
@@ -185,7 +198,9 @@ class PieChartPainter extends CustomPainter {
       final double y = (size.height * 0.74 / 2) * math.sin(prevAngle + (totalAngle * data[i].percentage / 2));
       // 保留一位小数
       final String percentage = '${(data[i].percentage * 100).toStringAsFixed(1)}%';
+      /*绘制文本*/
       drawPercentage(canvas, percentage, x, y, size);
+      /*变换角度，绘制下一个商品*/
       prevAngle = prevAngle + totalAngle * data[i].percentage;
     }
 
@@ -202,6 +217,7 @@ class PieChartPainter extends CustomPainter {
     canvas.restore();
   }
 
+  /*绘制文字*/
   void drawPercentage(Canvas context, String percentage, double x, double y, Size size) {
     final TextSpan span = TextSpan(
         style: const TextStyle(color: Colors.white, fontSize: Dimens.font_sp12),

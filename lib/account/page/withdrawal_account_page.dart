@@ -46,6 +46,7 @@ class _WithdrawalAccountPageState extends State<WithdrawalAccountPage> {
         }
       ),
       body: _list.isEmpty ? const StateLayout(type: StateType.account) :
+          /*AnimatedList ： 动画列表*/
       AnimatedList(
         key: _listKey,
         padding: const EdgeInsets.only(top: 8.0),

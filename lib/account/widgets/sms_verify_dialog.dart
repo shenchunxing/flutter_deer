@@ -100,6 +100,7 @@ class _SMSVerifyDialogState extends State<SMSVerifyDialog> {
         Expanded(
           child: Stack(
             children: <Widget>[
+              /*EditableText ： 此widget一般不直接使用的，使用TextField代替，此处只是为了获取它的输入功能和样式、监听字符改变，最后拿到_codeList ，赋值给Text，所以真正的UI效果是_buildInputWidget*/
               EditableText(
                 controller: _controller,
                 focusNode: _focusNode,
@@ -122,13 +123,14 @@ class _SMSVerifyDialogState extends State<SMSVerifyDialog> {
                       _codeList[i] = '';
                     }
                   }
+                  /*输入完成*/
                   if (v.length == _codeList.length) {
                     Toast.show('验证码：${_controller.text}');
                     for (var i = 0; i < _codeList.length; i ++) {
                       _codeList[i] = '';
                     }
                     /// https://github.com/flutter/flutter/issues/47191
-                    /// https://github.com/flutter/flutter/pull/57264 
+                    /// https://github.com/flutter/flutter/pull/57264
                     /// 1.19.0已修复，小于此版本需添加addPostFrameCallback处理，否则会错误触发onChanged。
                     SchedulerBinding.instance.addPostFrameCallback((_) {
                       _controller.clear();
@@ -175,6 +177,7 @@ class _SMSVerifyDialogState extends State<SMSVerifyDialog> {
               _currentSecond = _second;
               _clickable = false;
             });
+            /*定时器*/
             _subscription = Stream.periodic(const Duration(seconds: 1), (i) => i).take(_second).listen((i) {
               setState(() {
                 _currentSecond = _second - i - 1;

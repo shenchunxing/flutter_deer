@@ -28,6 +28,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
     return Scaffold(
       body: CustomScrollView(
         key: const Key('statistic_list'),
+        /*ClampingScrollPhysics：防止滚动超出边界，夹住*/
         physics: const ClampingScrollPhysics(),
         slivers: _sliverBuilder(),
       ),
@@ -120,6 +121,7 @@ class _StatisticsItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /*AspectRatio： 设置图片的长宽比例*/
     return AspectRatio(
       aspectRatio: 2.14,
       child: GestureDetector(
@@ -136,7 +138,7 @@ class _StatisticsItem extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[

@@ -67,6 +67,7 @@ class _WebViewPageState extends State<WebViewPage> {
             WebViewWidget(
               controller: _controller,
             ),
+            /*进度条*/
             if (_progressValue != 100) LinearProgressIndicator(
               value: _progressValue / 100,
               backgroundColor: Colors.transparent,

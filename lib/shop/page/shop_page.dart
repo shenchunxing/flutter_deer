@@ -19,6 +19,7 @@ class ShopPage extends StatefulWidget {
 
   const ShopPage({
     super.key,
+    /*isAccessibilityTest：该字段只是判断是否处于测试状态*/
     this.isAccessibilityTest = false,
   });
 
@@ -91,10 +92,12 @@ class _ShopPageState extends State<ShopPage> with BasePageMixin<ShopPage, ShopPa
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Gaps.vGap12,
+            //Consumer:两个参数的数据共享
             Consumer<UserProvider>(
               builder: (_, provider, child) {
                 final Widget header = Stack(
                   children: <Widget>[
+                    /*我的理解是这么写相当于给Stack设置宽高,可以省去外面嵌套一层container*/
                     const SizedBox(width: double.infinity, height: 56.0),
                     const Text(
                       '官方直营店',
@@ -111,12 +114,14 @@ class _ShopPageState extends State<ShopPage> with BasePageMixin<ShopPage, ShopPa
                     child!,
                   ],
                 );
+
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: MergeSemantics(
                     child: header,
                   ),
                 );
+
               },
               child: Positioned(
                 top: 38.0,
@@ -142,6 +147,7 @@ class _ShopPageState extends State<ShopPage> with BasePageMixin<ShopPage, ShopPa
                 ),
               ),
             ),
+            /*_ShopFunctionModule : 内部封装多个item*/
             _ShopFunctionModule(
               data: _menuTitle,
               image: _menuImage,

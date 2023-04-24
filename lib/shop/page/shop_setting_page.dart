@@ -57,6 +57,7 @@ class _ShopSettingPageState extends State<ShopSettingPage> {
                 _check ? '正在营业' : '暂停营业',
                 style: TextStyles.textBold24,
               ),
+              /*Spacer ： 弹簧效果，让两个控件直接间距达到最大*/
               const Spacer(),
               Semantics(
                 label: '店铺营业开关',

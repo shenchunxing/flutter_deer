@@ -42,14 +42,17 @@ class _DemoPageState extends State<DemoPage> {
           Gaps.vGap5,
           ClickItem(
             title: 'Overlay',
+            /*悬浮按钮*/
             onTap: () => AppNavigator.push(context, OverlayDemo()),
           ),
           ClickItem(
             title: 'Focus',
+            /*键盘*/
             onTap: () => AppNavigator.push(context, const FocusDemoPage(title: 'Focus Demo')),
           ),
           ClickItem(
             title: 'RipplesAnimation',
+            /*水波纹动画*/
             onTap: () => AppNavigator.push(context, const RipplesAnimationPage()),
           ),
           ClickItem(
@@ -58,10 +61,12 @@ class _DemoPageState extends State<DemoPage> {
           ),
           ClickItem(
             title: 'ScratchCard',
+            /*刮刮卡*/
             onTap: () => AppNavigator.push(context, const ScratchCardDemoPage()),
           ),
           ClickItem(
             title: 'Lottie',
+            /*Lottie动画*/
             onTap: () => AppNavigator.push(context, const LottieDemo()),
           ),
         ],

@@ -25,6 +25,7 @@ class _AccountRecordListPageState extends State<AccountRecordListPage> {
         /// 将item默认合并的语义拆开，自行组合， 另一种方式见 withdrawal_record_list_page.dart
         addSemanticIndexes: false,
         itemBuilder: (_, int index) {
+          /*StickyHeader : 悬浮每一行的header*/
           return StickyHeader(
             header: Container(
               alignment: Alignment.centerLeft,

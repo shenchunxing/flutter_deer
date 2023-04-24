@@ -165,6 +165,7 @@ class GoodsSortBottomSheetState extends State<GoodsSortBottomSheet> with SingleT
         provider.setListAndChangeTab();
         if (provider.index > 2) {
           provider.setIndex(2);
+          /*选中某一项*/
           widget.onSelected(provider.mList[index].id, provider.mList[index].name);
           NavigatorUtils.goBack(context);
         }

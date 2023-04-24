@@ -205,6 +205,7 @@ class _GoodsEditPageState extends State<GoodsEditPage> {
       /// 使用true则高度不受16分之9的最高限制
       isScrollControlled: true,
       builder: (BuildContext context) {
+        /*底部的商品分类选择器*/
         return GoodsSortBottomSheet(
           provider: _provider,
           onSelected: (_, name) {

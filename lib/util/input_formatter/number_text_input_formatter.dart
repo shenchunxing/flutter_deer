@@ -32,6 +32,7 @@ class UsNumberTextInputFormatter extends TextInputFormatter {
     }
   }
 
+  /*校验*/
   @override
   TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
     String value = newValue.text;

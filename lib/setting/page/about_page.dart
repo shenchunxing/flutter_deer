@@ -48,6 +48,7 @@ class _AboutPageState extends State<AboutPage> {
       // 2s定时器
       _countdownTimer = Timer.periodic(const Duration(seconds: 2), (_) {
         // https://www.jianshu.com/p/e4106b829bff
+        // mounted：是否存在构建树中，存在就继续setState，不存在就return。因为开启了定时器，可能在disponse期间，继续会执行定时器，执行setState，导致出现问题。
         if (!mounted) {
           return;
         }

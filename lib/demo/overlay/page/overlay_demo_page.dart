@@ -25,6 +25,7 @@ class _OverlayDemoPageState extends State<OverlayDemoPage> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      /*悬浮条*/
       _overlayEntry = OverlayEntry(
         builder: (context) => _buildBottomNavigation(context),
       );
@@ -78,16 +79,18 @@ class _OverlayDemoPageState extends State<OverlayDemoPage> {
       right: width * 0.2,
       bottom: 20.0,
       child: SafeArea(
+        /*MyBottomNavigationBar：自定义的底部条*/
         child: MyBottomNavigationBar(
-          /// 是否显示指示器
+          /// 根据栈里面是否push过，是否显示指示器
           isShowIndicator: Application.navigatorObserver.list.isEmpty,
           selectedCallback: (position) {
             /// 返回主页
             void removeRoute(Route<dynamic> route) {
               Navigator.removeRoute(context, route);
             }
+            /*清空路由*/
             Application.navigatorObserver.list.forEach(removeRoute);
-            /// 手动清空
+            /// 手动清空数组
             Application.navigatorObserver.list = [];
           },
         ),

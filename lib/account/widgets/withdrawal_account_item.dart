@@ -47,6 +47,7 @@ class _WithdrawalAccountItemState extends State<WithdrawalAccountItem> with Sing
   
   @override
   Widget build(BuildContext context) {
+    /*正面*/
     final Widget front = Stack(
       children: <Widget>[
         Positioned(
@@ -80,7 +81,8 @@ class _WithdrawalAccountItemState extends State<WithdrawalAccountItem> with Sing
         ),
       ],
     );
-    
+
+    /*反面*/
     final Widget back = Center(
       child: GestureDetector(
         onTap: () => Toast.show('提现'),
@@ -109,11 +111,13 @@ class _WithdrawalAccountItemState extends State<WithdrawalAccountItem> with Sing
       child: AnimatedBuilder(
         animation: _animation,
         builder: (_, child) {
+          /*翻转动画*/
           return Transform(
             alignment: FractionalOffset.center,
             transform: Matrix4.identity()
               ..setEntry(3, 2, 0.002)
               ..rotateX(pi * _animation.value),
+            /*卡片*/
             child: AccountCard(
               type: widget.data.type,
               child: InkWell(

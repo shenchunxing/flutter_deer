@@ -46,12 +46,16 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
   void initState() {
     super.initState();
     _initialDay = DateTime.now();
+    /*默认选中*/
     _selectedWeekDay = _initialDay.day;
     _selectedDay = _initialDay;
     _selectedMonth = _initialDay.month;
+    /*构建当前一周*/
     _weeksDays = date.DateUtils.daysInRange(date.DateUtils.previousWeek(_initialDay), date.DateUtils.nextDay(_initialDay)).toList().sublist(1, 8);
+    /*构建当前这个月*/
     _currentMonthsDays = date.DateUtils.daysInMonth(_initialDay);
     _monthList.clear();
+    /*构建月份*/
     for (int i = 1; i < 13; i ++) {
       _monthList.add(i);
     }
@@ -102,11 +106,14 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
 //                        crossFadeState: _isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
 //                        duration: const Duration(milliseconds: 300),
 //                      ),
+                    /*带动画效果的日历构建*/
                       AnimatedSize(
                         curve: Curves.decelerate,
                         duration: const Duration(milliseconds: 300),
+                        /*根据年月日构建不同日历*/
                         child: _buildCalendar(),
                       ),
+                      /*选中月份的时候，底下的收起/展开*/
                       if (_selectedIndex == 1) InkWell(
                         onTap: () {
                           setState(() {
@@ -167,7 +174,8 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
       },
     );
   }
-  
+
+  /*构建折线图*/
   Widget _buildChart(Color color, Color shadowColor, String title, String count) {
     
     final Column body = Column(
@@ -184,12 +192,14 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         ),
         Gaps.vGap4,
         Expanded(
+          /*BezierChart:图表*/
           child: BezierChart(
             bezierChartScale: BezierChartScale.CUSTOM,
             xAxisCustomValues: const <double>[0, 5, 10, 15, 20, 25, 30],
             footerValueBuilder: (double value) => '',
             bubbleLabelValueBuilder: (double value) => '\n',
             series: [
+              /*折线图*/
               BezierLine(
                 dataPointStrokeColor: color,
                 label: widget.index == 1 ? '单' : '元',
@@ -205,7 +215,8 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
         ),
       ],
     );
-    
+
+    /*比例显示*/
     return AspectRatio(
       aspectRatio: 3,
       child: MyCard(
@@ -287,6 +298,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
     if (_isExpanded) {
       list = _currentMonthsDays;
     } else {
+      /*如果不是展开的，就只显示当前一周的天数*/
       list = date.DateUtils.daysInWeek(_selectedDay);
     }
     dayWidgets.addAll(_buildWeeks());
@@ -321,6 +333,7 @@ class _OrderStatisticsPageState extends State<OrderStatisticsPage> with TickerPr
     void addButton(int month) {
       monthWidgets.add(
         Center(
+          /*单个日历按钮*/
           child: SelectedDateButton(
             '$month月',
             selected: month == _selectedMonth,

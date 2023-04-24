@@ -48,6 +48,7 @@ class _GoodsSizePageState extends State<GoodsSizePage> {
 
     // 获取Build完成状态监听
     WidgetsBinding.instance.addPostFrameCallback((_) {
+      /*引导页*/
       _showHint();
     });
   }
@@ -55,10 +56,11 @@ class _GoodsSizePageState extends State<GoodsSizePage> {
   /// design/4商品/index.html#artboard18
   void _showHint() {
     final RenderBox hint = _hintKey.currentContext!.findRenderObject()! as RenderBox;
+    /*蒙版弹窗的封装*/
     showPopupWindow<void>(
       context: context,
       isShowBg: true,
-      offset: const Offset(50.0, 150.0),
+      offset: const Offset(50.0, 150.0),/*偏移位置*/
       anchor: hint,
       child: Semantics(
         label: '弹出引导页',
@@ -124,6 +126,7 @@ class _GoodsSizePageState extends State<GoodsSizePage> {
               child: _goodsSizeList.isEmpty ? const StateLayout(
                 type: StateType.goods,
                 hintText: '暂无商品规格',
+                /*侧滑删除库*/
               ) : SlidableAutoCloseBehavior(
                 child: ListView.builder(
                   itemCount: _goodsSizeList.length,
@@ -229,7 +232,7 @@ class _GoodsSizePageState extends State<GoodsSizePage> {
         ),
       ),
     );
-    // 侧滑删除
+    /*Slidable : 侧滑删除*/
     return Slidable(
       key: Key(index.toString()),
       endActionPane: ActionPane(

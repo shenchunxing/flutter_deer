@@ -36,6 +36,7 @@ class _WithdrawalPasswordPageState extends State<WithdrawalPasswordPage> {
                 enableDrag: false,
                 /// 使用true则高度不受16分之9的最高限制
                 isScrollControlled: true,
+                /*密码输入框*/
                 builder: (_) => const WithdrawalPasswordSetting()
               );
             }
@@ -49,6 +50,7 @@ class _WithdrawalPasswordPageState extends State<WithdrawalPasswordPage> {
     );
   }
 
+  /*忘记密码提示框*/
   void _showHintDialog() {
     showElasticDialog<void>(
       context: context,
@@ -69,6 +71,7 @@ class _WithdrawalPasswordPageState extends State<WithdrawalPasswordPage> {
     );
   }
 
+  /*短信验证输入框*/
   void _showVerifyDialog() {
     showDialog<void>(
       context: context,

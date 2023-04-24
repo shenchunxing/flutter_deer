@@ -124,6 +124,7 @@ class _WithdrawalPageState extends State<WithdrawalPage> {
                     maxLength: 10,
                     controller: _controller,
                     keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                    /*自定义数字格式化校验*/
                     inputFormatters: [UsNumberTextInputFormatter()],
                     style: const TextStyle(
                       fontSize: 32.0,

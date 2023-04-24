@@ -61,15 +61,16 @@ class _AccountPageState extends State<AccountPage> {
             fit: BoxFit.fill,
           ),
         ),
+        /*注意这里的布局：这里实际上当前余额对齐到底部MainAxisAlignment.end，而下面2个本身是对齐到center的。因为Flexible卡在了底部，这里布局实际上很粗糙*/
         child: Column(
           children: <Widget>[
             const _AccountMoney(
               title: '当前余额(元)',
               money: '30.12',
-              alignment: MainAxisAlignment.end,
+              alignment: MainAxisAlignment.end,//主轴底部对齐
               moneyTextStyle: TextStyle(color: Colors.white, fontSize: 32.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoThin'),
             ),
-            Expanded(
+            Flexible(
               child: Row(
                 children: const <Widget>[
                   _AccountMoney(title: '累计结算金额', money: '20000'),
@@ -109,6 +110,7 @@ class _AccountMoney extends StatelessWidget {
             const SizedBox(width: double.infinity),
             Text(title, style: const TextStyle(color: Colours.text_disabled, fontSize: Dimens.font_sp12)),
             Gaps.vGap8,
+            /*RiseNumberText：带动画的文本*/
             RiseNumberText(
               NumUtil.getDoubleByValueStr(money) ?? 0,
               style: moneyTextStyle ?? const TextStyle(

@@ -72,6 +72,7 @@ class _GoodsStatisticsPageState extends State<GoodsStatisticsPage> {
               Gaps.vGap32,
               if (_type) time else MergeSemantics(child: time,),
               Gaps.vGap8,
+              /*圆盘图表*/
               _buildChart(),
               const Text('热销商品排行', style: TextStyles.textBold18),
               ListView.builder(

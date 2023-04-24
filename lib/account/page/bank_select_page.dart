@@ -51,6 +51,7 @@ class _BankSelectPageState extends State<BankSelectPage> {
       list.forEach(_addBank);
       SuspensionUtil.sortListBySuspensionTag(_bankList);
       SuspensionUtil.setShowSuspensionStatus(_bankList);
+      /*首字母筛选*/
       _indexBarData = _bankList.map((BankEntity e) {
         if (e.isShowSuspension) {
           return e.firstLetter.nullSafe;
@@ -83,14 +84,18 @@ class _BankSelectPageState extends State<BankSelectPage> {
         child: AzListView(
           data: _bankList,
           itemCount: _bankList.length,
+          /*构建每个银行项*/
           itemBuilder: (_, int index) {
             if (index == 0 && widget.type == 0) {
               return _buildHeader();
             }
             return _buildListItem(index);
           },
-          indexBarItemHeight: 25,
+          /*每个索引高度*/
+          indexBarItemHeight: 50,
+          /*索引*/
           indexBarData: _indexBarData,
+          /*索引设置*/
           indexBarOptions: IndexBarOptions(
             needRebuild: true,
             indexHintWidth: 96,
@@ -160,6 +165,7 @@ class _BankSelectPageState extends State<BankSelectPage> {
                 opacity: model.isShowSuspension ? 1 : 0,
                 child: SizedBox(
                   width: 28.0,
+                  /*首字母匹配的就显示出来*/
                   child: Text(model.firstLetter.nullSafe),
                 )
               ),
